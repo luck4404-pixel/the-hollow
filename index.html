@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hollow — Tales from the Other Side</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #241811;
+    --bg-deep: #1B110B;
+    --surface: #2E2016;
+    --surface-2: #3A2A1C;
+    --border: rgba(240, 220, 185, 0.09);
+    --text: #EDE3D2;
+    --text-dim: #A08D74;
+    --toxic: #9ABF3B;
+    --toxic-dim: #5E7A2E;
+    --toxic-faint: rgba(154, 191, 59, 0.12);
+    --blood: #C7392B;
+    --blood-dim: #8E2418;
+    --bone: #E8DFC9;
+    --font-display: 'Creepster', 'Special Elite', serif;
+    --font-body: 'Special Elite', 'Courier New', monospace;
+    --font-mono: 'Space Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background:
+      radial-gradient(ellipse 90% 60% at 70% -10%, rgba(154, 191, 59, 0.05), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 10% 110%, rgba(199, 57, 43, 0.05), transparent 60%),
+      var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--blood); color: var(--bone); }
+
+  /* ============ NAV ============ */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px clamp(20px, 5vw, 64px);
+    background: rgba(27, 17, 11, 0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+
+  .nav__logo svg { display: block; }
+
+  .nav__links {
+    display: flex;
+    gap: clamp(14px, 3vw, 34px);
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .nav__links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav__links a:hover { color: var(--toxic); }
+
+  @media (max-width: 640px) {
+    .nav__links { display: none; }
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: clamp(24px, 5vw, 70px);
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(48px, 9vh, 110px) clamp(20px, 5vw, 64px) clamp(60px, 10vh, 120px);
+    min-height: 82vh;
+  }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; text-align: center; }
+    .hero__visual { order: -1; margin: 0 auto; }
+  }
+
+  .hero__tag {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--toxic);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+    padding: 6px 14px;
+    border: 1px solid rgba(154, 191, 59, 0.35);
+    border-radius: 999px;
+    background: var(--toxic-faint);
+  }
+
+  .hero__tag .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--blood);
+    animation: blink 3.2s infinite;
+  }
+
+  @keyframes blink { 0%, 88%, 100% { opacity: 1; } 92% { opacity: 0.15; } 96% { opacity: 1; } }
+
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(3.4rem, 9vw, 6.8rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: 3px;
+    color: var(--bone);
+    text-shadow: 4px 4px 0 var(--blood-dim);
+    animation: flicker 7s infinite;
+  }
+
+  .hero__title em {
+    font-style: normal;
+    color: var(--toxic);
+    text-shadow: 4px 4px 0 var(--bg-deep);
+  }
+
+  @keyframes flicker {
+    0%, 91%, 94%, 100% { opacity: 1; }
+    92% { opacity: 0.55; }
+    93% { opacity: 0.9; }
+  }
+
+  .hero__sub {
+    margin: 26px 0 34px;
+    max-width: 52ch;
+    color: var(--text-dim);
+    font-size: 1.05rem;
+  }
+
+  @media (max-width: 860px) { .hero__sub { margin-left: auto; margin-right: auto; } }
+
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 30px;
+    background: var(--blood);
+    color: var(--bone);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    border-bottom: 4px solid var(--blood-dim);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.2s;
+  }
+  .hero__cta:hover { background: #DA4A38; transform: translateY(-2px); }
+  .hero__cta:active { transform: translateY(1px); }
+
+  .hero__note {
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  /* --- skull with flat long shadow (matches the illustration style) --- */
+  .hero__visual { position: relative; width: min(100%, 400px); }
+
+  .skull-card {
+    position: relative;
+    background: #6B4E38;
+    border-radius: 18px;
+    padding: 8%;
+    border: 1px solid rgba(0,0,0,0.25);
+    box-shadow: 0 22px 50px rgba(0,0,0,0.45);
+    transform: rotate(-2deg);
+    transition: transform 0.4s;
+  }
+  .skull-card:hover { transform: rotate(0deg) scale(1.02); }
+
+  .skull-card img {
+    width: 100%;
+    display: block;
+    filter: drop-shadow(14px 14px 0 rgba(0,0,0,0.28));
+  }
+
+  .skull-card__label {
+    position: absolute;
+    bottom: -14px;
+    right: -10px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--toxic);
+    padding: 8px 14px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border-radius: 4px;
+    transform: rotate(2deg);
+  }
+  .skull-card__label strong { color: var(--toxic); }
+
+  .float-bat {
+    position: absolute;
+    animation: flit 9s ease-in-out infinite;
+  }
+  .float-bat--1 { top: -28px; left: -34px; animation-delay: 0s; }
+  .float-bat--2 { bottom: 8px; left: -46px; animation-delay: -3.5s; transform: scale(0.7); }
+
+  @keyframes flit {
+    0%, 100% { transform: translateY(0) rotate(-6deg); }
+    50% { transform: translateY(-22px) rotate(8deg); }
+  }
+
+  /* ============ SECTION SHELL ============ */
+  .section {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(56px, 9vh, 100px) clamp(20px, 5vw, 64px);
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--toxic);
+    margin-bottom: 14px;
+  }
+  .section-label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(154,191,59,0.4), transparent);
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: var(--bone);
+    margin-bottom: 40px;
+  }
+  .section-title em { font-style: normal; color: var(--blood); }
+
+  /* ============ COUNTDOWN ============ */
+  .countdown-zone {
+    background: linear-gradient(180deg, rgba(154,191,59,0.06), transparent 70%);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .count-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 860px;
+  }
+
+  @media (max-width: 640px) {
+    .count-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .count-cell {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 12px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .count-cell::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--toxic);
+    opacity: 0.7;
+  }
+  .count-cell:first-child::before { background: var(--blood); }
+
+  .count-cell b {
+    display: block;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    color: var(--bone);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+  }
+  .count-cell span {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .countdown-hint {
+    margin-top: 22px;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  /* ============ TALES ============ */
+  .tales-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 900px) { .tales-grid { grid-template-columns: 1fr; } }
+
+  .tale {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 30px 26px 26px;
+    position: relative;
+    transition: transform 0.25s, border-color 0.25s;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .tale:hover {
+    transform: translateY(-5px);
+    border-color: rgba(199, 57, 43, 0.45);
+  }
+
+  .tale__num {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    color: rgba(240, 220, 185, 0.08);
+    line-height: 1;
+  }
+
+  .tale__tag {
+    align-self: flex-start;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .tale__tag--haunt { background: var(--toxic-faint); color: var(--toxic); border: 1px solid rgba(154,191,59,0.3); }
+  .tale__tag--blood { background: rgba(199,57,43,0.12); color: #E06A54; border: 1px solid rgba(199,57,43,0.35); }
+  .tale__tag--occult { background: rgba(232,223,201,0.07); color: var(--bone); border: 1px solid var(--border); }
+
+  .tale h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.65rem;
+    letter-spacing: 1.5px;
+    color: var(--bone);
+    line-height: 1.15;
+  }
+
+  .tale p {
+    color: var(--text-dim);
+    font-size: 0.92rem;
+    flex: 1;
+  }
+
+  .tale__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px dashed var(--border);
+    padding-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  .fear-rating { display: inline-flex; gap: 3px; align-items: center; }
+
+  .fear-rating svg { display: block; }
+
+  /* ============ SPIRITS ============ */
+  .spirits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  @media (max-width: 980px) { .spirits-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .spirits-grid { grid-template-columns: 1fr; } }
+
+  .spirit {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 22px;
+    text-align: center;
+    transition: transform 0.25s, background 0.25s;
+  }
+  .spirit:hover {
+    transform: translateY(-4px);
+    background: var(--surface-2);
+  }
+
+  .spirit__icon {
+    width: 72px; height: 72px;
+    margin: 0 auto 18px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+  }
+  .spirit__icon--toxic { background: var(--toxic-faint); border: 1px solid rgba(154,191,59,0.3); }
+  .spirit__icon--blood { background: rgba(199,57,43,0.12); border: 1px solid rgba(199,57,43,0.3); }
+
+  .spirit h4 {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--bone);
+    margin-bottom: 8px;
+  }
+  .spirit p { font-size: 0.82rem; color: var(--text-dim); }
+
+  /* ============ HORROR TALKS ============ */
+  .talks-zone {
+    border-top: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(199,57,43,0.045), transparent 70%);
+  }
+
+  .talks-warning {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 760px;
+    margin: 0 0 34px;
+    padding: 13px 18px;
+    background: rgba(199,57,43,0.08);
+    border: 1px solid rgba(199,57,43,0.3);
+    border-left: 4px solid var(--blood);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+
+  .talks-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 46px;
+  }
+  @media (max-width: 860px) { .talks-grid { grid-template-columns: 1fr; } }
+
+  .talk-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px 26px 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .talk-card:hover { border-color: rgba(154,191,59,0.35); transform: translateY(-3px); }
+
+  .talk-card__quote {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    font-family: var(--font-display);
+    font-size: 2.6rem;
+    line-height: 1;
+    color: rgba(199,57,43,0.25);
+  }
+
+  .talk-card__alias {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--toxic);
+  }
+
+  .talk-card__alias time {
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    text-transform: none;
+    float: right;
+    font-size: 0.64rem;
+    padding-top: 2px;
+  }
+
+  .talk-card p {
+    color: var(--text);
+    font-size: 0.95rem;
+    flex: 1;
+    overflow-wrap: break-word;
+  }
+
+  .talk-card__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px dashed var(--border);
+    padding-top: 12px;
+  }
+
+  .shiver-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .shiver-btn:hover { border-color: rgba(154,191,59,0.5); color: var(--toxic); }
+  .shiver-btn.voted { border-color: var(--toxic); color: var(--toxic); background: var(--toxic-faint); }
+  .shiver-btn:disabled { cursor: default; }
+
+  .talk-card__badge {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border: 1px dashed var(--border);
+    border-radius: 999px;
+    padding: 5px 12px;
+  }
+
+  /* --- confession form --- */
+  .talk-form {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: clamp(24px, 4vw, 40px);
+    max-width: 760px;
+  }
+
+  .talk-form__grid { display: grid; gap: 16px; }
+
+  .talk-form label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 7px;
+  }
+
+  .talk-form input[type="text"],
+  .talk-form textarea {
+    width: 100%;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 13px 15px;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+  }
+  .talk-form input:focus, .talk-form textarea:focus {
+    outline: none;
+    border-color: var(--toxic);
+  }
+  .talk-form textarea { min-height: 130px; resize: vertical; }
+  .talk-form input::placeholder, .talk-form textarea::placeholder { color: rgba(160,141,116,0.55); }
+
+  .talk-form__row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .talk-form__check {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    cursor: pointer;
+    user-select: none;
+  }
+  .talk-form__check input { accent-color: var(--blood); width: 15px; height: 15px; cursor: pointer; }
+
+  .confess-btn {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 13px 28px;
+    background: var(--toxic);
+    color: var(--bg-deep);
+    border: none;
+    border-bottom: 4px solid var(--toxic-dim);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .confess-btn:hover { background: #AECF54; transform: translateY(-2px); }
+  .confess-btn:active { transform: translateY(1px); }
+
+  .form-msg {
+    margin-top: 12px;
+    font-size: 0.82rem;
+    color: var(--blood);
+    min-height: 1.4em;
+    font-style: italic;
+  }
+
+  .talk-card.is-new {
+    border-color: rgba(154,191,59,0.55);
+    animation: cardIn 0.6s ease;
+  }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(-14px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* ============ FEAR METER ============ */
+  .fear-zone {
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .fear-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .fear-meter {
+    height: 26px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 30px 0 12px;
+  }
+
+  .fear-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--toxic-dim), var(--toxic) 55%, var(--blood));
+    transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .fear-ticks {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 30px;
+  }
+
+  .fear-btn {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 15px 34px;
+    background: transparent;
+    color: var(--toxic);
+    border: 1px dashed rgba(154,191,59,0.5);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .fear-btn:hover {
+    background: var(--toxic-faint);
+    border-style: solid;
+  }
+  .fear-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .fear-msg {
+    margin-top: 24px;
+    min-height: 1.6em;
+    color: var(--text-dim);
+    font-style: italic;
+    font-size: 0.95rem;
+  }
+  .fear-msg--max { color: var(--blood); font-weight: bold; }
+
+  .shake { animation: shake 0.5s; }
+  @keyframes shake {
+    0%, 100% { transform: translate(0, 0); }
+    20% { transform: translate(-8px, 3px); }
+    40% { transform: translate(7px, -4px); }
+    60% { transform: translate(-5px, -3px); }
+    80% { transform: translate(4px, 4px); }
+  }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    text-align: center;
+    padding: 60px 20px 50px;
+    border-top: 1px solid var(--border);
+  }
+  .footer__eye {
+    width: 46px; height: 46px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: grid;
+    place-items: center;
+  }
+  .footer p {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+  }
+  .footer p b { color: var(--blood); font-weight: 400; }
+
+  /* ============ ENTRANCE ANIMATIONS ============ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.is-in { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001s !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001s !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<nav class="nav">
+  <a class="nav__logo" href="#top">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 2C7 2 4 5.5 4 10v4l2 1v4h3v-2h2v2h2v-2h2v2h3v-4l2-1v-4c0-4.5-3-8-8-8z" fill="#9ABF3B"/>
+      <circle cx="9" cy="10" r="2" fill="#241811"/>
+      <circle cx="15" cy="10" r="2" fill="#241811"/>
+      <circle cx="9" cy="10" r="0.8" fill="#C7392B"/>
+      <circle cx="15" cy="10" r="0.8" fill="#C7392B"/>
+    </svg>
+    THE&nbsp;HOLLOW
+  </a>
+  <ul class="nav__links">
+    <li><a href="#countdown">Countdown</a></li>
+    <li><a href="#tales">Tales</a></li>
+    <li><a href="#talks">Talks</a></li>
+    <li><a href="#spirits">Spirits</a></li>
+    <li><a href="#fear">Fear Test</a></li>
+  </ul>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div>
+    <span class="hero__tag"><span class="dot"></span> Est. 1666 &middot; Still open</span>
+    <h1 class="hero__title">Where the dead <em>read&nbsp;along</em></h1>
+    <p class="hero__sub">
+      The Hollow is an archive of whispers, cold spots, and doors that close on their own.
+      Every tale here was submitted by someone who survived it &mdash; or by someone who
+      didn't, and just doesn't know it yet.
+    </p>
+    <a class="hero__cta" href="#tales">
+      Enter if you dare
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 4v14m0 0l-6-6m6 6l6-6" stroke="#E8DFC9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <p class="hero__note">// no refunds on souls left inside //</p>
+  </div>
+
+  <div class="hero__visual">
+    <div class="skull-card">
+      <img src="skull.png" alt="Flat-design green skull with bloodshot eyes and a stitched forehead" width="400">
+      <div class="skull-card__label">SPECIMEN&nbsp;#001 &mdash; <strong>still blinking</strong></div>
+    </div>
+    <svg class="float-bat float-bat--1" width="54" height="44" viewBox="0 0 54 44" fill="none" aria-hidden="true">
+      <path d="M27 8c-3 0-5 2-5.5 5-4-3-9-4-13-1 3 0 5 2 6 5 1 4 5 7 9 7v8l3-4 3 4v-8c4 0 8-3 9-7 1-3 3-5 6-5-4-3-9-2-13 1-.5-3-2.5-5-4.5-5z" fill="#3A2A1C"/>
+    </svg>
+    <svg class="float-bat float-bat--2" width="54" height="44" viewBox="0 0 54 44" fill="none" aria-hidden="true">
+      <path d="M27 8c-3 0-5 2-5.5 5-4-3-9-4-13-1 3 0 5 2 6 5 1 4 5 7 9 7v8l3-4 3 4v-8c4 0 8-3 9-7 1-3 3-5 6-5-4-3-9-2-13 1-.5-3-2.5-5-4.5-5z" fill="#3A2A1C"/>
+    </svg>
+  </div>
+</header>
+
+<!-- ================= COUNTDOWN ================= -->
+<section class="countdown-zone" id="countdown">
+  <div class="section">
+    <div class="section-label reveal">All Hallows' Eve</div>
+    <h2 class="section-title reveal">The veil thins in&hellip;</h2>
+    <div class="count-grid reveal">
+      <div class="count-cell"><b id="cd-days">--</b><span>Days</span></div>
+      <div class="count-cell"><b id="cd-hours">--</b><span>Hours</span></div>
+      <div class="count-cell"><b id="cd-mins">--</b><span>Minutes</span></div>
+      <div class="count-cell"><b id="cd-secs">--</b><span>Seconds</span></div>
+    </div>
+    <p class="countdown-hint reveal">&ldquo;On the last night of October, the archive reads itself aloud.&rdquo; &mdash; The Caretaker, unwillingly</p>
+  </div>
+</section>
+
+<!-- ================= TALES ================= -->
+<section id="tales">
+  <div class="section">
+    <div class="section-label reveal">Filed under: things that followed people home</div>
+    <h2 class="section-title reveal">Tales from the <em>Crypt&nbsp;Shelf</em></h2>
+    <div class="tales-grid">
+
+      <article class="tale reveal">
+        <span class="tale__num">01</span>
+        <span class="tale__tag tale__tag--haunt">Haunting</span>
+        <h3>The Tenant Upstairs</h3>
+        <p>
+          For three weeks the flat above mine played the same slow footsteps, corner to corner,
+          always at 2:14 AM. The landlord finally admitted the flat has been sealed since 1987.
+          The footsteps stopped the night I said hello.
+        </p>
+        <div class="tale__meta">
+          <span>4 min read</span>
+          <span class="fear-rating" aria-label="Fear level 3 out of 5">
+            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="#C7392B"/></svg>
+            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="#C7392B"/></svg>
+            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="#C7392B"/></svg>
+            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="none" stroke="#5E4A38"/></svg>
+            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="none" stroke="#5E4A38"/></svg>
+          </span>
+        </div>
+      </article>
+
+      <article class="tale reveal" style="transition-delay:0.12s">
+        <span class="tale__num">02</span>
+        <span class="tale__tag tale__tag--occult">Occult</span>
+        <h3>Song of the Third Well</h3>
+        <p>
+          The village elders never spoke of the third well. My grandmother's rule was simple:
+          if you hear humming from it, you do not look over the edge &mdash; because whatever is
+          humming is only doing so to check whether anyone is listening. I heard my own voice hum back.
+        </p>
+        <div class="tale__meta">
+          <span>7 min read</span>
+          <span class="fear-rating" aria-label="Fear level 4 out of 5">
+            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="#C7392B"/></svg>
+            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="#C7392B"/></svg>
+            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="#C7392B"/></svg>
+            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="#C7392B"/></svg>
+            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="none" stroke="#5E4A38"/></svg>
+          </span>
+        </div>
+      </article>
+
+      <article class="tale reveal" style="transition-delay:0.24s">
+        <span class="tale__num">03</span>
+        <span class="tale__tag tale__tag--blood">Blood</span>
+        <h3>Do Not Press</h3>
+        <p>
+          There was a red button in the hospital basement labelled DO NOT PRESS. The night guard
+          pressed it. Nothing happened &mdash; for six days. On the seventh, every door in the building
+          unlocked at once, and something walked out wearing his badge. We know because it still
+          clocks in. There is also a red button at the bottom of this page.
+        </p>
+        <div class="tale__meta">
+          <span>5 min read</span>
+          <span class="fear-rating" aria-label="Fear level 5 out of 5">
+            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="#C7392B"/></svg>
+            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="#C7392B"/></svg>
+            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="#C7392B"/></svg>
+            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="#C7392B"/></svg>
+            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="#C7392B"/></svg>
+          </span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= HORROR TALKS ================= -->
+<section class="talks-zone" id="talks">
+  <div class="section">
+    <div class="section-label reveal">Community confessions &middot; open all night</div>
+    <h2 class="section-title reveal">Horror <em>Talks</em></h2>
+
+    <div class="talks-warning reveal">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="flex-shrink:0">
+        <path d="M12 3L2.5 20h19L12 3z" fill="none" stroke="#C7392B" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M12 9.5v4.5" stroke="#C7392B" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="12" cy="17" r="1.2" fill="#C7392B"/>
+      </svg>
+      Listener discretion advised. These stories are shared by visitors of the Hollow &mdash;
+      unverified, unsettling, and best read with the lights already off. Submissions live in
+      your browser only; the Hollow keeps no records. It just remembers.
+    </div>
+
+    <div class="talks-grid" id="talksGrid">
+
+      <article class="talk-card reveal">
+        <span class="talk-card__quote">&rdquo;</span>
+        <div class="talk-card__alias">R. &mdash; former night guard <time>02:14 AM</time></div>
+        <p>
+          Storage unit 44 was never rented out, but every December the lock was found open and
+          the inside smelled of woodsmoke. Company policy said to log it and say nothing.
+          Last winter I logged it, and the logbook wrote back: my own handwriting, one entry
+          ahead of me, describing what I would do the next night. It was right.
+        </p>
+        <div class="talk-card__foot">
+          <button class="shiver-btn" type="button" data-count="127">
+            <svg width="13" height="13" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <path d="M18 4C11 4 6 9.5 6 16v14l4-3 4 3 4-3 4 3 4-3 4 3V16c0-6.5-5-12-12-12z" fill="currentColor" opacity="0.7"/>
+            </svg>
+            <span class="shiver-count">127</span> shivers
+          </button>
+          <span class="talk-card__badge">unverified</span>
+        </div>
+      </article>
+
+      <article class="talk-card reveal" style="transition-delay:0.12s">
+        <span class="talk-card__quote">&rdquo;</span>
+        <div class="talk-card__alias">Anonymous <time>03:33 AM</time></div>
+        <p>
+          My phone rang from my own number. I answered, and it was my voice, older, tired,
+          whispering: &ldquo;Don't say you'll come home late tonight.&rdquo; I laughed it off and
+          told my wife exactly that at breakfast. Her face went white. She said I'd said the
+          same thing the morning before the accident I don't remember being in.
+        </p>
+        <div class="talk-card__foot">
+          <button class="shiver-btn" type="button" data-count="298">
+            <svg width="13" height="13" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <path d="M18 4C11 4 6 9.5 6 16v14l4-3 4 3 4-3 4 3 4-3 4 3V16c0-6.5-5-12-12-12z" fill="currentColor" opacity="0.7"/>
+            </svg>
+            <span class="shiver-count">298</span> shivers
+          </button>
+          <span class="talk-card__badge">unverified</span>
+        </div>
+      </article>
+
+      <article class="talk-card reveal">
+        <span class="talk-card__quote">&rdquo;</span>
+        <div class="talk-card__alias">D. &mdash; hospice volunteer <time>03:51 AM</time></div>
+        <p>
+          Patients near the end sometimes talk to someone standing behind me. You get used to
+          it. What I never got used to was little Mr. Aiyar, three days before he passed,
+          patting the empty chair by my side and saying gently, &ldquo;Tell her he's been very
+          patient.&rdquo; That night my mother called. She'd dreamed of my late father. He was
+          waiting, she said, but he wasn't angry. He was just being patient.
+        </p>
+        <div class="talk-card__foot">
+          <button class="shiver-btn" type="button" data-count="341">
+            <svg width="13" height="13" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <path d="M18 4C11 4 6 9.5 6 16v14l4-3 4 3 4-3 4 3 4-3 4 3V16c0-6.5-5-12-12-12z" fill="currentColor" opacity="0.7"/>
+            </svg>
+            <span class="shiver-count">341</span> shivers
+          </button>
+          <span class="talk-card__badge">unverified</span>
+        </div>
+      </article>
+
+      <article class="talk-card reveal" style="transition-delay:0.12s">
+        <span class="talk-card__quote">&rdquo;</span>
+        <div class="talk-card__alias">M. &mdash; night-shift nurse <time>04:04 AM</time></div>
+        <p>
+          Ward 3 has a call bell that rings from an empty bed every third Sunday. Protocol is to
+          cancel it from the desk without going in. One Sunday a new colleague went in out of
+          politeness and said the room was freezing but a woman's voice thanked her for
+          &ldquo;finally answering.&rdquo; We transferred her to days. She says on her last night
+          shift, every call bell on the ward rang at once &mdash; except that one.
+        </p>
+        <div class="talk-card__foot">
+          <button class="shiver-btn" type="button" data-count="203">
+            <svg width="13" height="13" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <path d="M18 4C11 4 6 9.5 6 16v14l4-3 4 3 4-3 4 3 4-3 4 3V16c0-6.5-5-12-12-12z" fill="currentColor" opacity="0.7"/>
+            </svg>
+            <span class="shiver-count">203</span> shivers
+          </button>
+          <span class="talk-card__badge">unverified</span>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="section-label reveal" style="margin-top:8px">Your turn &middot; the Hollow is listening</div>
+    <h2 class="section-title reveal" style="font-size:clamp(1.6rem,3.5vw,2.3rem);margin-bottom:28px">Confess to the dark</h2>
+
+    <form class="talk-form reveal" id="talkForm" novalidate>
+      <div class="talk-form__grid">
+        <div>
+          <label for="aliasInput">Alias (or leave blank &mdash; the dark already knows your name)</label>
+          <input type="text" id="aliasInput" maxlength="40" placeholder="e.g. R. — night guard">
+        </div>
+        <div>
+          <label for="storyInput">Your dark story</label>
+          <textarea id="storyInput" maxlength="2000" placeholder="It started the week we moved in. The dog would not stop staring at the hallway..."></textarea>
+        </div>
+        <div class="talk-form__row">
+          <label class="talk-form__check">
+            <input type="checkbox" id="swearCheck">
+            I swear on my grave this is true
+          </label>
+          <button class="confess-btn" type="submit">Release it into the Hollow</button>
+        </div>
+        <p class="form-msg" id="formMsg"></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ================= SPIRITS ================= -->
+<section id="spirits">
+  <div class="section">
+    <div class="section-label reveal">Meet the permanent residents</div>
+    <h2 class="section-title reveal">Spirits of the <em>Hollow</em></h2>
+    <div class="spirits-grid">
+
+      <div class="spirit reveal">
+        <div class="spirit__icon spirit__icon--toxic">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+            <path d="M18 4C11 4 6 9.5 6 16v14l4-3 4 3 4-3 4 3 4-3 4 3V16c0-6.5-5-12-12-12z" fill="#9ABF3B"/>
+            <circle cx="13" cy="16" r="2.4" fill="#241811"/>
+            <circle cx="23" cy="16" r="2.4" fill="#241811"/>
+          </svg>
+        </div>
+        <h4>The Wisp</h4>
+        <p>Eats flashlight batteries. Allergic to the word &ldquo;leave&rdquo;.</p>
+      </div>
+
+      <div class="spirit reveal" style="transition-delay:0.1s">
+        <div class="spirit__icon spirit__icon--blood">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+            <path d="M18 6c-2.5 0-4.2 1.7-4.6 4.2-3.4-2.5-7.6-3.3-10.9-0.8 2.5 0 4.2 1.7 5 4.2.9 3.4 4.3 5.9 7.6 5.9v6.7l2.9-3.4 2.9 3.4v-6.7c3.3 0 6.7-2.5 7.6-5.9.8-2.5 2.5-4.2 5-4.2-3.3-2.5-7.5-1.7-10.9.8C22.2 7.7 20.5 6 18 6z" fill="#C7392B"/>
+          </svg>
+        </div>
+        <h4>The Flitter</h4>
+        <p>A bat that has read every tale twice. Twice.</p>
+      </div>
+
+      <div class="spirit reveal" style="transition-delay:0.2s">
+        <div class="spirit__icon spirit__icon--toxic">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+            <circle cx="18" cy="18" r="5" fill="#9ABF3B"/>
+            <g stroke="#9ABF3B" stroke-width="1.8" stroke-linecap="round">
+              <path d="M18 13V4M18 23v9M13 15.5L5 11M23 15.5l8-4.5M13 20.5L5 25M23 20.5l8 4.5"/>
+            </g>
+          </svg>
+        </div>
+        <h4>The Weaver</h4>
+        <p>Spins webs in doorways. Charges rent in secrets.</p>
+      </div>
+
+      <div class="spirit reveal" style="transition-delay:0.3s">
+        <div class="spirit__icon spirit__icon--blood">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+            <path d="M18 6C11.4 6 6 11.4 6 18s5.4 12 12 12 12-5.4 12-12S24.6 6 18 6zm0 19a7 7 0 110-14 7 7 0 010 14z" fill="#C7392B"/>
+            <circle cx="18" cy="18" r="4" fill="#E8DFC9"/>
+            <circle cx="18" cy="18" r="2" fill="#241811"/>
+          </svg>
+        </div>
+        <h4>The Watcher</h4>
+        <p>It is the reason the skull's eyes are red. Also: behind you.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEAR TEST ================= -->
+<section class="fear-zone" id="fear">
+  <div class="section">
+    <div class="fear-wrap">
+      <div class="section-label reveal" style="justify-content:center">Interactive &middot; Proceed at your own risk</div>
+      <h2 class="section-title reveal">The <em>Fear&nbsp;Meter</em></h2>
+      <p class="reveal" style="color:var(--text-dim);max-width:52ch;margin:0 auto;">
+        Press the button below. We won't tell you what it does. The meter, however, will tell you
+        how much of it you can take.
+      </p>
+
+      <div class="fear-meter reveal" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Fear level">
+        <div class="fear-fill" id="fearFill"></div>
+      </div>
+      <div class="fear-ticks reveal">
+        <span>Calm</span><span>Uneasy</span><span>Looking away</span><span>Regret</span>
+      </div>
+
+      <button class="fear-btn reveal" id="fearBtn" type="button">Do NOT press this</button>
+      <p class="fear-msg" id="fearMsg">The meter is calm. Suspiciously calm.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="footer__eye">
+    <svg width="22" height="22" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+      <path d="M18 8C11 8 5.5 13.5 3 18c2.5 4.5 8 10 15 10s12.5-5.5 15-10c-2.5-4.5-8-10-15-10zm0 14a4 4 0 110-8 4 4 0 010 8z" fill="#A08D74"/>
+      <circle cx="18" cy="18" r="2" fill="#C7392B"/>
+    </svg>
+  </div>
+  <p>THE HOLLOW &middot; an archive of the unexplained</p>
+  <p style="margin-top:8px">It is always watching. <b>It is always reading.</b></p>
+</footer>
+
+<script>
+  // ---------- Halloween countdown ----------
+  function nextHalloween() {
+    const now = new Date();
+    let year = now.getFullYear();
+    let target = new Date(year, 9, 31, 0, 0, 0); // Oct 31
+    if (now > target) target = new Date(year + 1, 9, 31);
+    return target;
+  }
+  const target = nextHalloween();
+  const els = {
+    d: document.getElementById('cd-days'),
+    h: document.getElementById('cd-hours'),
+    m: document.getElementById('cd-mins'),
+    s: document.getElementById('cd-secs')
+  };
+  function tick() {
+    let diff = Math.max(0, target - new Date());
+    const d = Math.floor(diff / 864e5);
+    const h = Math.floor(diff / 36e5) % 24;
+    const m = Math.floor(diff / 6e4) % 60;
+    const s = Math.floor(diff / 1e3) % 60;
+    els.d.textContent = String(d).padStart(2, '0');
+    els.h.textContent = String(h).padStart(2, '0');
+    els.m.textContent = String(m).padStart(2, '0');
+    els.s.textContent = String(s).padStart(2, '0');
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // ---------- Fear meter ----------
+  const messages = [
+    "The meter is calm. Suspiciously calm.",
+    "Something knocked. From inside the meter.",
+    "The temperature just dropped. Curious.",
+    "Your cursor is being followed. Don't look.",
+    "The skull is smiling wider now.",
+    "The bats have stopped mid-air. They never do that.",
+    "BEHIND YOU. (Just checking if you'd look.)",
+    "MAXIMUM FEAR ACHIEVED. The Hollow thanks you for your cooperation."
+  ];
+  let presses = 0;
+  const btn = document.getElementById('fearBtn');
+  const fill = document.getElementById('fearFill');
+  const msg = document.getElementById('fearMsg');
+  const meter = document.querySelector('.fear-meter');
+
+  btn.addEventListener('click', () => {
+    presses++;
+    const pct = Math.min(presses * 14, 100);
+    fill.style.width = pct + '%';
+    meter.parentElement.setAttribute('aria-valuenow', pct);
+    msg.textContent = messages[Math.min(presses - 1, messages.length - 1)];
+    msg.classList.toggle('fear-msg--max', pct >= 100);
+    document.body.classList.remove('shake');
+    void document.body.offsetWidth; // restart animation
+    if (pct >= 100) {
+      document.body.classList.add('shake');
+      btn.disabled = true;
+      btn.textContent = "You were warned.";
+    } else if (presses % 2 === 0) {
+      document.body.classList.add('shake');
+    }
+  });
+
+  // ---------- Scroll reveal ----------
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ---------- Horror Talks: shiver votes ----------
+  document.querySelectorAll('.shiver-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.disabled) return;
+      const countEl = btn.querySelector('.shiver-count');
+      countEl.textContent = parseInt(countEl.textContent, 10) + 1;
+      btn.disabled = true;
+      btn.classList.add('voted');
+    });
+  });
+
+  // ---------- Horror Talks: confession form ----------
+  const form = document.getElementById('talkForm');
+  const storyInput = document.getElementById('storyInput');
+  const aliasInput = document.getElementById('aliasInput');
+  const swearCheck = document.getElementById('swearCheck');
+  const formMsg = document.getElementById('formMsg');
+  const talksGrid = document.getElementById('talksGrid');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const story = storyInput.value.trim();
+    if (story.length < 20) {
+      formMsg.textContent = 'The Hollow needs more than that. Give it at least a few sentences.';
+      storyInput.focus();
+      return;
+    }
+    if (!swearCheck.checked) {
+      formMsg.textContent = 'You must swear on your grave. Those are the rules of the Hollow.';
+      return;
+    }
+    formMsg.textContent = '';
+
+    const now = new Date();
+    const stamp = String(now.getHours()).padStart(2, '0') + ':' +
+                  String(now.getMinutes()).padStart(2, '0') + ' AM';
+    const alias = aliasInput.value.trim() || 'Anonymous';
+
+    const card = document.createElement('article');
+    card.className = 'talk-card is-new';
+    card.innerHTML =
+      '<span class="talk-card__quote">&rdquo;</span>' +
+      '<div class="talk-card__alias"></div>' +
+      '<p></p>' +
+      '<div class="talk-card__foot">' +
+        '<button class="shiver-btn" type="button">' +
+          '<svg width="13" height="13" viewBox="0 0 36 36" fill="none" aria-hidden="true">' +
+            '<path d="M18 4C11 4 6 9.5 6 16v14l4-3 4 3 4-3 4 3 4-3 4 3V16c0-6.5-5-12-12-12z" fill="currentColor" opacity="0.7"/>' +
+          '</svg><span class="shiver-count">0</span> shivers' +
+        '</button>' +
+        '<span class="talk-card__badge">fresh confession</span>' +
+      '</div>';
+
+    card.querySelector('.talk-card__alias').textContent = alias + ' ';
+    const timeEl = document.createElement('time');
+    timeEl.textContent = stamp;
+    card.querySelector('.talk-card__alias').appendChild(timeEl);
+    card.querySelector('p').textContent = story;
+    talksGrid.prepend(card);
+
+    card.querySelector('.shiver-btn').addEventListener('click', function () {
+      if (this.disabled) return;
+      const c = this.querySelector('.shiver-count');
+      c.textContent = parseInt(c.textContent, 10) + 1;
+      this.disabled = true;
+      this.classList.add('voted');
+    });
+
+    form.reset();
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  // ---------- A little secret ----------
+  console.log('%cTHE HOLLOW', 'font-size:28px;color:#9ABF3B;text-shadow:2px 2px 0 #C7392B;');
+  console.log('%cYou read the source code. The source code reads you back.', 'color:#A08D74;font-style:italic;');
+</script>
+</body>
+</html>
